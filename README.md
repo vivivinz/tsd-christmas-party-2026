@@ -8,13 +8,18 @@ Static, mobile-first invitation site (plain HTML/CSS/JS, no build step).
 | --- | --- |
 | `index.html` | Page structure + link-preview (Open Graph) tags |
 | `styles.css` | Cover, opening animation, opened scene, sound button |
-| `details.css` | **Placeholder** Program/Details section (replace in part 2) |
 | `script.js` | `CONTENT` object (all invitation copy), opening sequence, confetti, music |
+| `program.js` | **Program timeline**: `PROGRAM` array (times/titles/acts), `ACTS`, `PROGRAM_COPY`, rendering |
+| `program.css` | Program timeline styles ("Wired for Greatness" lights) |
 | `assets/` | Images (WebP), music, favicon, preview image, calendar file |
 
 ## Editing
 
 - **Invitation text:** edit the `CONTENT` object at the top of `script.js`.
+- **Program:** edit the `PROGRAM` array at the top of `program.js`, one line per item:
+  `{ time: '5:00 – 5:30 PM', title: 'Registration', act: 1 }`. An empty `time` hides the gold pill.
+  Titles containing "Raffle" get the ticket icon automatically, and the last item is styled as the finale.
+  Act names and the Christmas element used for each act header are in `ACTS`.
 - **Link-preview text and image:** the `<head>` of `index.html`. `og:url` and `og:image` must be absolute
   URLs: they currently point to `https://vivivinz.github.io/tsd-christmas-party-2026/`. Change them if you
   publish elsewhere.

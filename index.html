@@ -34,9 +34,10 @@
   <link rel="preload" as="image" href="assets/envelope-pocket.webp" type="image/webp">
   <link rel="preload" as="image" href="assets/envelope-flap.webp" type="image/webp">
   <link rel="stylesheet" href="styles.css">
-  <!-- PROGRAM / DETAILS SECTION STYLES (replace in part 2) -->
-  <link rel="stylesheet" href="details.css">
+  <!-- PROGRAM SECTION STYLES (self-contained: program.css + program.js) -->
+  <link rel="stylesheet" href="program.css">
   <script defer src="script.js"></script>
+  <script defer src="program.js"></script>
 </head>
 <body class="is-locked">
 
@@ -146,30 +147,77 @@
         <img class="s-item s-gift s-gift--red" style="--d:1180ms" data-anim="drop" src="assets/gift-red.webp" width="204" height="223" alt="" decoding="async">
         <img class="s-item s-gift s-gift--cream" style="--d:1300ms" data-anim="drop" src="assets/gift-cream.webp" width="194" height="212" alt="" decoding="async">
 
-        <a class="s-item details-btn" style="--d:1500ms" data-anim="fade" href="#details" id="detailsBtn"><span data-copy="button.details"></span></a>
+        <a class="s-item details-btn" style="--d:1500ms" data-anim="fade" href="#program" id="detailsBtn">
+          <span data-copy="button.details"></span>
+          <span class="details-btn__ring" aria-hidden="true"></span>
+          <span class="details-btn__shine" aria-hidden="true"><i></i></span>
+          <svg class="details-btn__hand" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11.24V7.5a2.5 2.5 0 0 1 5 0v3.74a4.49 4.49 0 0 0 2-3.74 4.5 4.5 0 0 0-9 0c0 1.56.79 2.93 2 3.74Zm9.84 4.63-4.54-2.26a1.3 1.3 0 0 0-.54-.11H13v-6a1.5 1.5 0 0 0-3 0v10.74l-3.43-.72-.24-.03c-.31 0-.59.13-.79.33l-.79.8 4.94 4.94c.27.27.65.44 1.06.44h6.79c.75 0 1.33-.55 1.44-1.28l.75-5.27.02-.2c0-.62-.38-1.16-.91-1.38Z"/></svg>
+        </a>
       </div>
     </section>
 
     <!-- =========================================================
-         3. PROGRAM / DETAILS  (placeholder: replace this whole
-            <section> + details.css in part 2)
+         3. PROGRAM  ("Wired for Greatness" lights timeline)
+            Self-contained: this <section> + program.css + program.js.
+            The program items/acts are edited at the top of program.js;
+            the timeline itself is rendered into #programTimeline.
          ========================================================= -->
-    <section class="details" id="details" aria-labelledby="detailsTitle" hidden>
-      <div class="details__panel">
-        <p class="details__eyebrow" data-copy="details.eyebrow"></p>
-        <h2 class="details__title" id="detailsTitle" data-copy="details.title"></h2>
-        <p class="details__meta"><span data-copy="card.date"></span> · <span data-copy="card.time"></span></p>
-        <!-- the .ics file holds the calendar event: edit it if the date/time/venue change -->
-        <a class="details__cal" href="assets/tsd-christmas-party-2026.ics" download="TSD-Christmas-Party-2026.ics" type="text/calendar">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2v2H5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2H7Zm12 7v10H5V9h14Zm-8 2v3H8v2h3v3h2v-3h3v-2h-3v-3h-2Z"/></svg>
-          <span data-copy="details.calendarButton"></span>
-        </a>
+    <section class="program" id="program" aria-labelledby="programTitle" hidden>
+      <div class="program__snow" aria-hidden="true"></div>
+
+      <header class="program__intro">
+        <button class="program__back program__back--top js-back" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 5-7 7 1.4 1.4L11 8.8V20h2V8.8l4.6 4.6L19 12z"/></svg>
+          <span data-program-copy="backLabel"></span>
+        </button>
+        <p class="program__eyebrow" data-program-copy="eyebrow"></p>
+        <h2 class="program__title" id="programTitle" tabindex="-1" data-program-copy="title"></h2>
+        <img class="program__squiggle" src="assets/gold-squiggle.webp" width="446" height="46" alt="" loading="lazy" decoding="async">
+        <p class="program__lede" data-program-copy="lede"></p>
+      </header>
+
+      <div class="timeline" id="programTimeline">
+        <div class="timeline__wire" aria-hidden="true"><span class="timeline__fill"></span></div>
+        <!-- acts + cards are rendered here by program.js -->
       </div>
+
+      <footer class="program__closing">
+        <div class="closing-label">
+          <img class="closing-label__bg" src="assets/cream-label.webp" width="880" height="585" alt="" loading="lazy" decoding="async">
+          <div class="closing-label__text">
+            <p class="closing-label__line" data-program-copy="closingLine"></p>
+            <p class="closing-label__meta">
+              <a class="closing-label__venue" id="closingVenue" target="_blank" rel="noopener"><span data-copy="card.venue"></span><span class="sr-only"> (opens map in a new tab)</span></a><br>
+              <span data-copy="card.date"></span> · <span data-copy="card.time"></span>
+            </p>
+          </div>
+          <img class="closing-deco closing-deco--l" src="assets/gift-black.webp" width="304" height="310" alt="" loading="lazy" decoding="async">
+          <img class="closing-deco closing-deco--r" src="assets/candle.webp" width="242" height="386" alt="" loading="lazy" decoding="async">
+        </div>
+
+        <div class="program__actions">
+          <!-- the .ics file holds the calendar event: edit it if the date/time/venue change -->
+          <a class="program__cal" href="assets/tsd-christmas-party-2026.ics" download="TSD-Christmas-Party-2026.ics" type="text/calendar">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2v2H5a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2H7Zm12 7v10H5V9h14Zm-8 2v3H8v2h3v3h2v-3h3v-2h-3v-3h-2Z"/></svg>
+            <span data-copy="details.calendarButton"></span>
+          </a>
+          <button class="program__back js-back" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 5-7 7 1.4 1.4L11 8.8V20h2V8.8l4.6 4.6L19 12z"/></svg>
+            <span data-program-copy="backLabel"></span>
+          </button>
+        </div>
+      </footer>
     </section>
-    <!-- ======================= END DETAILS ======================= -->
+    <!-- ======================= END PROGRAM ======================= -->
   </main>
 
   <div class="confetti-layer" id="confetti" aria-hidden="true"></div>
+
+  <!-- floating "back to invitation" (shown while reading the program) -->
+  <button class="back-float js-back" id="backFloat" type="button" aria-label="Back to invitation" hidden>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 5-7 7 1.4 1.4L11 8.8V20h2V8.8l4.6 4.6L19 12z"/></svg>
+    <span>Invitation</span>
+  </button>
 
   <button class="sound" id="soundBtn" type="button" aria-pressed="false" aria-label="Mute music" hidden>
     <svg class="sound__on" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4Zm12.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4Zm-2.5-8.8v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6Z"/></svg>

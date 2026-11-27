@@ -31,8 +31,6 @@
       details: 'Tap to View Details'
     },
     details: {
-      eyebrow: 'Program',
-      title: 'Program details coming soon',
       calendarButton: 'Add to Calendar'
     },
     music: {
@@ -57,8 +55,10 @@
       var v = lookup(el.getAttribute('data-copy'));
       if (typeof v === 'string') el.textContent = v;
     });
-    var venue = $('#venueLink');
-    if (venue) venue.href = CONTENT.card.mapUrl;
+    ['#venueLink', '#closingVenue'].forEach(function (sel) {
+      var a = $(sel);
+      if (a) a.href = CONTENT.card.mapUrl;
+    });
   }
 
   /* =====================================================================
@@ -277,12 +277,12 @@
   function showScene() {
     var cover = $('#cover');
     var scene = $('#scene');
-    var details = $('#details');
+    var program = $('#program');
 
     window.scrollTo(0, 0);
     cover.classList.add('is-overlay');           // keep the cover on top while the scene appears under it
     scene.hidden = false;
-    details.hidden = false;
+    if (program) program.hidden = false;
     doc.body.classList.remove('is-locked');
 
     requestAnimationFrame(function () {
@@ -336,14 +336,14 @@
     });
 
     $('#detailsBtn').addEventListener('click', function (e) {
-      var target = $('#details .details__panel') || $('#details');
+      var target = $('#program');
       if (!target) return;
       e.preventDefault();
-      target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
-      var title = $('#detailsTitle');
+      this.classList.add('was-used'); // stops the "tap me" hint
+      target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+      var title = $('#programTitle');
       if (title) {
-        title.setAttribute('tabindex', '-1');
-        setTimeout(function () { try { title.focus({ preventScroll: true }); } catch (e2) { /* ignore */ } }, reduceMotion ? 0 : 700);
+        setTimeout(function () { try { title.focus({ preventScroll: true }); } catch (e2) { /* ignore */ } }, reduceMotion ? 0 : 900);
       }
     });
 
@@ -352,6 +352,9 @@
     var fontsReady = doc.fonts && doc.fonts.ready ? doc.fonts.ready : Promise.resolve();
     Promise.race([fontsReady, wait(1200)]).then(go, go);
   }
+
+  // small shared hooks for program.js
+  window.TSD = { confettiBurst: confettiBurst, reduceMotion: reduceMotion };
 
   if (doc.readyState === 'loading') doc.addEventListener('DOMContentLoaded', init);
   else init();
